@@ -42,3 +42,9 @@ export function validate(schemas = {}) {
     }
   };
 }
+
+export const objectId = () =>
+  yup
+    .string()
+    .trim()
+    .matches(/^[0-9a-fA-F]{24}$/, "Invalid id");
