@@ -4,7 +4,7 @@ import { useState } from "react";
 type Props = {
   id: string;
   title?: string;
-  onDeleted?: () => void; // called when deletion succeeds
+  onDeleted?: () => void; 
   onError?: (message: string) => void;
   className?: string;
 };

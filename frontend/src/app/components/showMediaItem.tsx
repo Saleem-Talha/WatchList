@@ -132,15 +132,13 @@ export default function ShowMediaItem() {
                           Update
                         </button>
 
-                        {/* Use the extracted DeleteMediaItem component */}
+                        {}
                         <DeleteMediaItem
                           id={it._id}
                           title={it.title}
                           onDeleted={() => {
-                            // optimistic removal from UI
                             setItems((p) => p.filter((item) => item._id !== it._id));
                             setSuccess("Item deleted.");
-                            // clear success after a short delay
                             setTimeout(() => setSuccess(""), 3000);
                           }}
                           onError={(msg) => setError(msg)}
