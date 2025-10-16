@@ -1,4 +1,4 @@
-import CreateMediaItem from "@/app/components/createMediaItem";
+import CreateMediaItem from "../components/createMediaItem";
 import ShowMediaItem from "../components/showMediaItem";
 import LayoutCard from "@/app/components/Layout";
 

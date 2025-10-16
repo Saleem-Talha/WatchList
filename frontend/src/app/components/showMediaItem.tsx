@@ -2,6 +2,7 @@
 import { useState, useEffect, useMemo } from "react";
 import MediaItem from "../types/MediaItem";
 import LayoutCard from "./Layout";
+import DeleteMediaItem from "./DeleteMediaItem";
 
 export default function ShowMediaItem() {
   const [items, setItems] = useState<MediaItem[]>([]);
@@ -51,37 +52,6 @@ export default function ShowMediaItem() {
       }
     })();
   }, [token]);
-
-  async function handleDelete(id: string) {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
-    if (!token) {
-      setError("You must be logged in.");
-      return;
-    }
-    setError("");
-    setSuccess("");
-    const prev = items;
-    setItems((p) => p.filter((it) => it._id !== id));
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/media-items/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        setItems(prev); // rollback
-        setError(data.message || data.error || "Failed to delete item.");
-        return;
-      }
-      setSuccess("Item deleted.");
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
-      setItems(prev);
-      return;
-    }
-  }
 
   function statusClass(status: string) {
     switch (status) {
@@ -161,12 +131,20 @@ export default function ShowMediaItem() {
                         >
                           Update
                         </button>
-                        <button
-                          className="text-xs px-2 py-1 rounded border border-red-100 text-red-600 hover:bg-red-50"
-                          onClick={() => handleDelete(it._id)}
-                        >
-                          Delete
-                        </button>
+
+                        {/* Use the extracted DeleteMediaItem component */}
+                        <DeleteMediaItem
+                          id={it._id}
+                          title={it.title}
+                          onDeleted={() => {
+                            // optimistic removal from UI
+                            setItems((p) => p.filter((item) => item._id !== it._id));
+                            setSuccess("Item deleted.");
+                            // clear success after a short delay
+                            setTimeout(() => setSuccess(""), 3000);
+                          }}
+                          onError={(msg) => setError(msg)}
+                        />
                       </div>
                     </td>
                   </tr>
