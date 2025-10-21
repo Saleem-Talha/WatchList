@@ -25,7 +25,7 @@ export default function Layout({ title, subtitle, children }: Props) {
                 </p>
               )}
             </div>
-            <div className="flex items-center gap-3">
+            {/* <div className="flex items-center gap-3">
               <span className="text-xs text-slate-600 font-medium">WatchList</span>
               <div className="h-8 w-px bg-slate-200" />
               <a
@@ -34,7 +34,7 @@ export default function Layout({ title, subtitle, children }: Props) {
               >
                 Home
               </a>
-            </div>
+            </div> */}
           </div>
         </header>
 

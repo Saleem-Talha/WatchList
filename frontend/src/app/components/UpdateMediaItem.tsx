@@ -77,7 +77,7 @@ export default function UpdateMediaItem({ item, onUpdated, onError, className }:
         className={className ?? "text-xs px-2 py-1 rounded border border-slate-200 text-slate-900 hover:bg-slate-50"}
         aria-label={`Edit ${item.title}`}
       >
-        Edit
+        Update
       </button>
 
       {open && (

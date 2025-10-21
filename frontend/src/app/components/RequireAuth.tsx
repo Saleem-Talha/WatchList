@@ -19,14 +19,12 @@ export default function RequireAuth({ children, redirectTo = "/login" }: Props) 
     const [checking, setChecking] = useState(true);
 
     useEffect(() => {
-        // Make sure this runs client-side
+       
         const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
         if (!token) {
-            // Replace so user can't go back to protected page
             router.replace(redirectTo);
             return;
         }
-        // token exists -> allow render
         setChecking(false);
     }, [router, redirectTo]);
 

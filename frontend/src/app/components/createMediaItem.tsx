@@ -2,8 +2,10 @@
 
 import React, { useState } from "react";
 import Layout from "./Layout";
+import MediaItem from "../types/MediaItem";
 
 export default function CreateMediaItem() {
+
   const [title, setTitle] = useState("");
   const [type, setType] = useState<"movie" | "series" | "anime">("movie");
   const [notes, setNotes] = useState("");
@@ -51,7 +53,7 @@ export default function CreateMediaItem() {
   }
 
   return (
-    <Layout>
+    <Layout title="Add Media Item" subtitle="Add a new item to your watchlist">
       <section className="bg-white border border-slate-100 shadow rounded-2xl p-6">
         <div className="flex items-start justify-between gap-4">
           <div>

@@ -19,6 +19,15 @@ export async function getMediaItems(req, res){
     }
 }
 
+export async function getItemByPlannedStatus(req, res){
+    try{
+        const items = await MediaItemsSchema.find({userId:req.user.id, status:"planned"});
+        return res.status(200).json(items);
+    }catch(err){
+        return res.status(500).json({message:"Server error", error:err.message});
+    }
+}
+
 export async function getItemById(req, res){
     const {id} = req.validated.params;
     try{
