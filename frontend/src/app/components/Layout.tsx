@@ -7,7 +7,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function LayoutCard({ title, subtitle, children }: Props) {
+export default function Layout({ title, subtitle, children }: Props) {
   return (
     <main className="min-h-screen bg-gradient-to-b from-white to-slate-50 py-12">
       <div className="mx-auto max-w-5xl px-6">
@@ -20,13 +20,13 @@ export default function LayoutCard({ title, subtitle, children }: Props) {
                 </h1>
               )}
               {subtitle && (
-                <p className="mt-1 text-sm text-slate-600 max-w-xl">
+                <p className="mt-1 text-sm text-slate-700 max-w-xl">
                   {subtitle}
                 </p>
               )}
             </div>
             <div className="flex items-center gap-3">
-              <span className="text-xs text-slate-500">WatchList</span>
+              <span className="text-xs text-slate-600 font-medium">WatchList</span>
               <div className="h-8 w-px bg-slate-200" />
               <a
                 href="/"

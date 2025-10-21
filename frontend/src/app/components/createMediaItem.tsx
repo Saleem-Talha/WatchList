@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import LayoutCard from "./Layout";
+import React, { useState } from "react";
+import Layout from "./Layout";
 
 export default function CreateMediaItem() {
   const [title, setTitle] = useState("");
-  const [type, setType] = useState("movie");
+  const [type, setType] = useState<"movie" | "series" | "anime">("movie");
   const [notes, setNotes] = useState("");
   const [imgUrl, setImgUrl] = useState("");
-  const [status, setStatus] = useState("planned");
+  const [status, setStatus] = useState<"planned" | "watching" | "watched">("planned");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -51,94 +51,84 @@ export default function CreateMediaItem() {
   }
 
   return (
-    <LayoutCard>
+    <Layout>
       <section className="bg-white border border-slate-100 shadow rounded-2xl p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
             <h2 className="text-lg font-semibold text-slate-900">Add New Media Item</h2>
-            <p className="text-sm text-slate-600 mt-1">
+            <p className="text-sm text-slate-700 mt-1">
               Save items to your watchlist — keep track of what to watch next.
             </p>
           </div>
-          <div className="text-sm text-slate-500 px-3 py-1 rounded-md bg-slate-50">Quick Add</div>
         </div>
 
         <form onSubmit={handleSubmit} className="mt-5 grid gap-4">
-          <div className="grid gap-1">
-            <label className="text-xs text-slate-600">Title</label>
-            <input
-              type="text"
-              placeholder="e.g. Inception"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="border border-slate-200 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 placeholder:text-slate-300"
-              required
-            />
-          </div>
+          <label className="text-xs text-slate-700">Title</label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="e.g. Inception"
+            className="mt-1 border border-slate-200 rounded-md px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 bg-white"
+            required
+          />
 
           <div className="grid sm:grid-cols-2 gap-3">
-            <div className="grid gap-1">
-              <label className="text-xs text-slate-600">Type</label>
+            <div>
+              <label className="text-xs text-slate-700">Type</label>
               <select
                 value={type}
-                onChange={(e) => setType(e.target.value)}
-                className="border border-slate-200 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                onChange={(e) => setType(e.target.value as any)}
+                className="mt-1 w-full border border-slate-200 rounded-md px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-200 bg-white"
               >
-                <option value="movie" className=" text-black">Movie</option>
-                <option value="series" className=" text-black" >Series</option>
-                <option value="anime" className=" text-black">Anime</option>
+                <option value="movie">Movie</option>
+                <option value="series">Series</option>
+                <option value="anime">Anime</option>
               </select>
             </div>
 
-            <div className="grid gap-1">
-              <label className="text-xs text-slate-600">Status</label>
+            <div>
+              <label className="text-xs text-slate-700">Status</label>
               <select
                 value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                className="border border-slate-200 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                onChange={(e) => setStatus(e.target.value as any)}
+                className="mt-1 w-full border border-slate-200 rounded-md px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-200 bg-white"
               >
-                <option value="planned" className=" text-black">Planned</option>
-                <option value="watching" className=" text-black">Watching</option>
-                <option value="watched" className=" text-black">Watched</option>
+                <option value="planned">Planned</option>
+                <option value="watching">Watching</option>
+                <option value="watched">Watched</option>
               </select>
             </div>
           </div>
 
-          <div className="grid gap-1">
-            <label className="text-xs text-slate-600">Notes</label>
-            <textarea
-              placeholder="Optional notes or reminder"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              className="border border-slate-200 rounded-md px-3 py-2 min-h-[90px] focus:outline-none focus:ring-2 focus:ring-indigo-200 placeholder:text-slate-300"
-            />
-          </div>
+          <label className="text-xs text-slate-700">Notes</label>
+          <textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            className="mt-1 border border-slate-200 rounded-md px-3 py-2 min-h-[90px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 bg-white"
+          />
 
-          <div className="grid gap-1">
-            <label className="text-xs text-slate-600">Image URL</label>
-            <input
-              type="url"
-              placeholder="https://..."
-              value={imgUrl}
-              onChange={(e) => setImgUrl(e.target.value)}
-              className="border border-slate-200 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 placeholder:text-slate-300"
-            />
-          </div>
+          <label className="text-xs text-slate-700">Image URL</label>
+          <input
+            type="url"
+            value={imgUrl}
+            onChange={(e) => setImgUrl(e.target.value)}
+            placeholder="https://..."
+            className="mt-1 border border-slate-200 rounded-md px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 bg-white"
+          />
 
           {(error || success) && (
             <p className={`${error ? "text-red-600" : "text-green-600"} text-sm`}>{error || success}</p>
           )}
 
-          <div className="pt-2">
-            <button
-              type="submit"
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-md py-2 font-medium shadow-sm transition"
-            >
-              Save Item
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="mt-2 w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-md py-2 font-medium shadow-sm"
+          >
+            Save Item
+          </button>
         </form>
       </section>
-    </LayoutCard>
+    </Layout>
   );
 }
