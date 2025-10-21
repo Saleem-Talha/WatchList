@@ -4,6 +4,7 @@ import CreateMediaItem from "@/app/components/createMediaItem";
 import ShowMediaItem from "@/app/components/showMediaItem";
 import LayoutCard from "@/app/components/Layout";
 import Logout from "@/app/components/Logout";
+import ShowPlannedItems from "../components/ShowPlannedItems";
 import RequireAuth from "@/app/components/RequireAuth";
 
 export default function Dashboard() {
@@ -26,6 +27,7 @@ export default function Dashboard() {
             <ShowMediaItem />
           </div>
         </div>
+        <ShowPlannedItems/>
       </LayoutCard>
     </RequireAuth>
   );

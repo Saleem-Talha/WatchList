@@ -4,6 +4,7 @@ import MediaItem from "../types/MediaItem";
 import Layout from "./Layout";
 import DeleteMediaItem from "./DeleteMediaItem";
 import UpdateMediaItem from "./UpdateMediaItem";
+import { statusClass } from "../lib/statusClass";
 
 export default function ShowMediaItem() {
   const [items, setItems] = useState<MediaItem[]>([]);
@@ -50,16 +51,7 @@ export default function ShowMediaItem() {
     })();
   }, [token]);
 
-  function statusClass(status: string) {
-    switch (status) {
-      case "watching":
-        return "bg-yellow-100 text-yellow-800";
-      case "watched":
-        return "bg-green-100 text-green-800";
-      default:
-        return "bg-slate-100 text-slate-800";
-    }
-  }
+
 
   return (
     <Layout title="Media Items" subtitle="Manage your watchlist">

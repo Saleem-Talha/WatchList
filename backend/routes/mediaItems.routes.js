@@ -4,13 +4,13 @@ import {validate} from "../middleware/validate.js";
 import {getMediaItems, createMediaItem, updateItem, deleteItem, getItemById, getItemByPlannedStatus} from "../controllers/mediaItem.controller.js";
 import { auth } from "../middleware/auth.js";
 
-const router = Router();
-router.use(auth);
-router.get("/", validate({query:listQuery}),getMediaItems);
-router.post("/", validate({body:mediaItemSchema}), createMediaItem);
-router.put("/:id", validate({params: itemIdParams, body: updateItemBody}), updateItem);
-router.delete("/:id", validate({params: itemIdParams}), deleteItem);
-router.get("/:id", validate({params: itemIdParams}), getItemById);
-router.get("/status/planned",validate({query:listQuery}), getItemByPlannedStatus);
+const planRouter = Router();
+planRouter.use(auth);
+planRouter.get("/", validate({query:listQuery}),getMediaItems);
+planRouter.post("/", validate({body:mediaItemSchema}), createMediaItem);
+planRouter.put("/:id", validate({params: itemIdParams, body: updateItemBody}), updateItem);
+planRouter.delete("/:id", validate({params: itemIdParams}), deleteItem);
+planRouter.get("/:id", validate({params: itemIdParams}), getItemById);
+planRouter.get("/status/planned",validate({query:listQuery}), getItemByPlannedStatus);
 
-export default router;
+export default planRouter;
