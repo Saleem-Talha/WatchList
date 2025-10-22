@@ -1,23 +1,24 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import LayoutCard from "./components/Layout";
 
-/** Tweak these two to quickly retheme */
-const BG_FROM = "from-sky-50";
+/** Quick theme switch: change these two to retheme the background */
+const BG_FROM = "from-slate-50";
 const BG_TO = "to-indigo-50";
 
 export default function LandingPage() {
   return (
     <div className={`relative min-h-screen overflow-hidden bg-gradient-to-br ${BG_FROM} ${BG_TO}`}>
-      {/* Soft ornaments */}
+      {/* Background ornaments */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -left-32 top-[-10%] h-[520px] w-[520px] rounded-full bg-sky-200/40 blur-3xl" />
-        <div className="absolute -right-36 bottom-[-10%] h-[520px] w-[520px] rounded-full bg-indigo-200/40 blur-3xl" />
+        <div className="absolute -left-32 top-[-10%] h-[520px] w-[520px] rounded-full bg-sky-200/35 blur-3xl" />
+        <div className="absolute -right-36 bottom-[-10%] h-[520px] w-[520px] rounded-full bg-indigo-200/35 blur-3xl" />
         <div className="absolute inset-0 [background-image:linear-gradient(to_right,rgba(30,41,59,.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(30,41,59,.06)_1px,transparent_1px)] [background-size:28px_28px]" />
       </div>
 
       {/* Header */}
-      <header className="mx-auto w-full max-w-7xl px-6 pt-10">
+      <header className="mx-auto w-full max-w-7xl px-6 pt-8">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-600 text-white font-bold">W</span>
@@ -38,10 +39,10 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* HERO */}
-      <section className="mx-auto w-full max-w-7xl px-6 pt-14 pb-10 lg:pt-20 lg:pb-12">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          {/* Left column */}
+      {/* Hero Section with Preview */}
+      <section className="mx-auto w-full max-w-7xl px-6 py-12 lg:py-16">
+        <div className="grid items-start gap-8 lg:grid-cols-2">
+          {/* Left column - Hero Content */}
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-white/80 px-3 py-1 text-xs text-indigo-700 backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-indigo-600" />
@@ -53,7 +54,7 @@ export default function LandingPage() {
             </h1>
 
             <p className="mt-5 max-w-xl text-lg text-slate-700">
-              Keep track of what you want to watch, what you’re watching, and what you’ve finished.
+              Keep track of what you want to watch, what you're watching, and what you've finished.
               Private, lightweight, and delightfully simple.
             </p>
 
@@ -82,37 +83,44 @@ export default function LandingPage() {
             </ul>
           </div>
 
-          {/* Right column */}
+          {/* Right column - Preview Cards */}
           <div className="relative">
-            <LayoutCard>
-              <div className="p-6">
-                <h3 className="text-lg font-semibold text-slate-900">Your Dashboard</h3>
-                <p className="mt-1 text-sm text-slate-700">A preview of how your items will look.</p>
+            {/* Main preview card */}
+            <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-slate-900">Your Dashboard</h3>
+              <p className="text-sm text-slate-700">A preview of how your items will look.</p>
 
-                <div className="mt-5 grid gap-3">
-                  <PreviewRow title="Inception" meta="Movie • planned" />
-                  <PreviewRow title="One Piece" meta="Anime • watching" />
-                  <PreviewRow title="Demon Slayer: Mugen Train" meta="Movie • watched" />
-                </div>
+              <div className="mt-6 space-y-3">
+                <PreviewRow
+                  title="Inception"
+                  meta="Movie • planned"
+                  src="https://image.tmdb.org/t/p/w300/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg"
+                />
+                <PreviewRow
+                  title="One Piece"
+                  meta="Anime • watching"
+                  src="https://image.tmdb.org/t/p/w300/e3NBGiAifW9Xt8xD5tpARskjccO.jpg"
+                />
+                <PreviewRow
+                  title="Demon Slayer: Mugen Train"
+                  meta="Movie • watched"
+                  src="https://image.tmdb.org/t/p/w300/h8Rb9gBr48ODIwYUttZNYeMWeUU.jpg"
+                />
               </div>
-            </LayoutCard>
-
-            {/* Fixed “This month” stats (no weird line breaks) */}
-            <div className="mt-4 lg:mt-0 lg:absolute lg:-left-10 lg:bottom-[-18px] w-[260px]">
-              <StatsCard added={12} watched={7} />
             </div>
 
-            {/* Reminder badge card */}
-            <div className="mt-4 lg:mt-0 lg:absolute lg:-right-6 lg:-top-6 w-[260px]">
+            {/* Stats and Reminder cards in a grid below */}
+            <div className="mt-6 grid grid-cols-2 gap-6">
+              <StatsCard added={12} watched={7} />
               <ReminderCard />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Overlap the next band to remove the “empty” strip */}
-      <section className="mx-auto -mt-10 w-full max-w-7xl px-6 pb-20 relative z-10 lg:-mt-14">
-        <div className="rounded-3xl border border-slate-100 bg-white/80 p-6 shadow-sm backdrop-blur md:p-10">
+      {/* Features section */}
+      <section className="relative z-0 mx-auto -mt-32 w-full max-w-7xl px-6 pb-20 pt-40">
+        <div className="rounded-3xl border border-slate-100 bg-white/90 p-8 shadow-sm backdrop-blur">
           <div className="grid gap-8 md:grid-cols-3">
             <Feature
               title="Plan your watches"
@@ -121,7 +129,7 @@ export default function LandingPage() {
             <Feature
               title="Stay on track with reminders"
               highlight
-              description="Set a date & time on any planned item and we’ll email you both ahead of time (e.g., 30–60 minutes before) and right when it starts."
+              description="Set a date & time on any planned item and we'll email you both ahead of time (e.g., 30–60 minutes before) and right when it starts."
             />
             <Feature
               title="Own your data"
@@ -130,16 +138,10 @@ export default function LandingPage() {
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/register"
-              className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-white shadow-sm transition hover:bg-indigo-700"
-            >
+            <Link href="/register" className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-white shadow-sm transition hover:bg-indigo-700">
               Start planning a watch
             </Link>
-            <Link
-              href="/login"
-              className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-slate-900 hover:bg-slate-50"
-            >
+            <Link href="/login" className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-slate-900 hover:bg-slate-50">
               I already have an account
             </Link>
           </div>
@@ -157,16 +159,10 @@ export default function LandingPage() {
               </p>
             </div>
             <div className="flex gap-3 md:justify-end">
-              <Link
-                href="/register"
-                className="rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
-              >
+              <Link href="/register" className="rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700">
                 Get started free
               </Link>
-              <Link
-                href="/login"
-                className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-900 hover:bg-slate-50"
-              >
+              <Link href="/login" className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-900 hover:bg-slate-50">
                 Sign in
               </Link>
             </div>
@@ -180,13 +176,36 @@ export default function LandingPage() {
 
 /* ---------- Bits ---------- */
 
-function PreviewRow({ title, meta }: { title: string; meta: string }) {
+// Update PreviewRow component to handle missing images gracefully
+function PreviewRow({
+  title,
+  meta,
+  src,
+}: {
+  title: string;
+  meta: string;
+  src: string;
+}) {
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-slate-100 bg-white p-3 shadow-sm">
-      <div className="h-14 w-24 rounded-md bg-slate-100" />
-      <div>
-        <div className="text-sm font-semibold text-slate-900">{title}</div>
-        <div className="text-xs text-slate-700">{meta}</div>
+    <div className="flex items-center gap-3 rounded-lg border border-slate-100 bg-white p-2 shadow-sm">
+      <div className="relative h-12 w-20 flex-shrink-0 overflow-hidden rounded">
+        {src ? (
+          <Image
+            src={src}
+            alt={`${title} cover`}
+            fill
+            sizes="80px"
+            className="object-cover"
+          />
+        ) : (
+          <div className="h-full w-full bg-slate-100 flex items-center justify-center">
+            <span className="text-xs text-slate-400">No image</span>
+          </div>
+        )}
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="truncate text-sm font-medium text-slate-900">{title}</div>
+        <div className="text-xs text-slate-600">{meta}</div>
       </div>
     </div>
   );

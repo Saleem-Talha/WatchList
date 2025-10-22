@@ -20,7 +20,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       {!hide && <Navbar />}
       <div className="flex">
         {!hide && <Sidebar />}
-        <main className={`flex-1 min-h-screen pt-16 ${!hide ? "ml-64" : ""} bg-slate-50 p-6`}>
+        <main className={`flex-1 bg-slate-50 p-4 ${!hide ? "ml-64" : ""}`}>
           {children}
         </main>
       </div>
