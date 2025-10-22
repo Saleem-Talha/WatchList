@@ -30,7 +30,7 @@ async function sendReminderEmail({ user, reminder }) {
   const mailOptions = {
     from: `"WatchList" <${process.env.EMAIL_USER}>`,
     to,
-    subject: "Reminder for your planned watch",
+    subject: "⏰ Reminder for your planned watch",
     text: `Hi ${username},
 
 This is your reminder.

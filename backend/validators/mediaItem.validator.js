@@ -28,7 +28,7 @@ export const updateItemBody = yup.object({
   type: yup.string().oneOf(Type, `Type must be one of: ${Type.join(", ")}`).optional(),
   notes: yup.string().trim().max(1000, "Notes can be at most 1000 characters").optional(),
   imgUrl: yup.string().trim().url("Image URL must be a valid URL")
-             .max(500, "Image URL can be at most 500 characters").optional(),
+             .max(50000, "Image URL can be at most 500 characters").optional(),
   status: yup.string().oneOf(Status, `Status must be one of: ${Status.join(", ")}`).optional(),
 });
 

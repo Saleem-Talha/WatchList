@@ -53,7 +53,7 @@ export default function CreateMediaItem() {
   }
 
   return (
-    <Layout title="Add Media Item" subtitle="Add a new item to your watchlist">
+    <Layout >
       <section className="bg-white border border-slate-100 shadow rounded-2xl p-6">
         <div className="flex items-start justify-between gap-4">
           <div>

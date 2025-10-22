@@ -52,7 +52,7 @@ export default function ShowPlannedItems() {
 
   return(
     <>
-    <Layout title="Media Items" subtitle="Manage your watchlist">
+    <Layout >
           <section className="bg-white border border-slate-100 shadow rounded-2xl p-6">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-lg font-medium text-slate-900">Your Media Items</h3>
