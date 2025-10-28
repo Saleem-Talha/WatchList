@@ -4,6 +4,13 @@ import React, { useEffect, useState } from "react";
 import Layout from "./Layout";
 import type MediaItem from "../types/MediaItem";
 
+/**
+ * CreateReminder — restyled to match your glassy/indigo aesthetic:
+ * - Card: bg-white/90, thin border, subtle shadow, backdrop blur, grid ornament
+ * - Inputs: rounded-xl, soft borders, indigo focus ring
+ * - Badges & helper text: tiny uppercase labels, pills
+ * - Alerts: tinted success/error boxes
+ */
 export default function CreateReminder() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [loadingItems, setLoadingItems] = useState(true);
@@ -129,51 +136,95 @@ export default function CreateReminder() {
 
   // filtered items for simple search dropdown
   const filtered = search
-    ? items.filter((it) => it.title?.toLowerCase().includes(search.toLowerCase()))
+    ? items.filter((it) =>
+        it.title?.toLowerCase().includes(search.toLowerCase())
+      )
     : items;
 
   return (
     <Layout>
-      <section className="bg-white border border-slate-100 shadow rounded-2xl p-6">
+      {/* Card shell */}
+      <section className="relative rounded-2xl border border-slate-100 bg-white/90 p-6 shadow-sm backdrop-blur">
+        {/* subtle grid ornament */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 rounded-2xl"
+        >
+          <div className="absolute inset-0 rounded-2xl [background-image:linear-gradient(to_right,rgba(30,41,59,.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(30,41,59,.05)_1px,transparent_1px)] [background-size:22px_22px]" />
+        </div>
+
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-lg font-semibold text-slate-900">
+            <span className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-white/80 px-3 py-1 text-xs text-indigo-700">
+              <span className="h-1.5 w-1.5 rounded-full bg-indigo-600" />
+              Reminders
+            </span>
+            <h2 className="mt-3 text-lg font-semibold text-slate-900">
               Create Reminder
             </h2>
-            <p className="text-sm text-slate-700 mt-1">
+            <p className="mt-1 text-sm text-slate-700">
               Schedule a reminder for an item in your media list.
             </p>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-5 grid gap-4">
-          <label className="text-xs text-slate-700">Media Title</label>
+        {/* Alerts */}
+        {(error || success) && (
+          <div
+            className={[
+              "mt-4 rounded-xl border px-3 py-2 text-sm",
+              error
+                ? "border-red-200 bg-red-50/70 text-red-700"
+                : "border-emerald-200 bg-emerald-50/70 text-emerald-700",
+            ].join(" ")}
+          >
+            {error || success}
+          </div>
+        )}
 
-          {/* search input to filter user's items */}
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              // clear selected id when typing to allow re-selection
-              setSelectedId("");
-            }}
-            placeholder={
-              loadingItems
-                ? "Loading your items..."
-                : "Type to search or choose from list"
-            }
-            className="mt-1 border border-slate-200 rounded-md px-3 py-2 text-slate-900 placeholder:text-slate-400 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-200"
-            disabled={loadingItems}
-            aria-label="Search media title"
-          />
-
-          {/* dropdown of matching items to pick exact title -> id */}
+        <form onSubmit={handleSubmit} className="mt-6 grid gap-5">
+          {/* Media Title (search) */}
           <div>
-            <label className="text-xs text-slate-700">
-              Select from your items (optional)
+            <label
+              htmlFor="search"
+              className="text-xs font-medium uppercase tracking-wide text-slate-600"
+            >
+              Media Title
             </label>
+            <input
+              id="search"
+              type="text"
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setSelectedId(""); // clear selected id when typing
+              }}
+              placeholder={
+                loadingItems
+                  ? "Loading your items..."
+                  : "Type to search or choose from list"
+              }
+              className="mt-2 w-full rounded-xl border border-slate-200 bg-white/90 px-3 py-2 text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+              disabled={loadingItems}
+              aria-label="Search media title"
+            />
+          </div>
+
+          {/* Select from your items */}
+          <div>
+            <div className="flex items-end justify-between">
+              <label
+                htmlFor="selectItem"
+                className="text-xs font-medium uppercase tracking-wide text-slate-600"
+              >
+                Select from your items (optional)
+              </label>
+              <span className="text-[11px] text-slate-500">
+                Selecting ensures the reminder links to the correct item.
+              </span>
+            </div>
             <select
+              id="selectItem"
               value={selectedId}
               onChange={(e) => {
                 const id = e.target.value;
@@ -181,7 +232,7 @@ export default function CreateReminder() {
                 const it = items.find((x) => x._id === id);
                 setSearch(it?.title ?? "");
               }}
-              className="mt-1 w-full border border-slate-200 rounded-md px-3 py-2 text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-200"
+              className="mt-2 w-full rounded-xl border border-slate-200 bg-white/90 px-3 py-2 text-slate-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
             >
               <option value="">-- choose a title from your list --</option>
               {filtered.map((it) => (
@@ -190,45 +241,59 @@ export default function CreateReminder() {
                 </option>
               ))}
             </select>
-            <div className="text-xs text-slate-500 mt-1">
-              Selecting will populate the title field and ensure the id belongs to
-              your account.
-            </div>
           </div>
 
-          <label className="text-xs text-slate-700">Planned Date & Time</label>
-          <input
-            type="datetime-local"
-            value={plannedAt}
-            onChange={(e) => setPlannedAt(e.target.value)}
-            className="mt-1 border border-slate-200 rounded-md px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-200 bg-white"
-            required
-          />
-
-          <label className="text-xs text-slate-700">Lead Minutes</label>
-          <input
-            type="number"
-            min={0}
-            max={10080}
-            value={leadMinutes}
-            onChange={(e) => setLeadMinutes(Number(e.target.value))}
-            placeholder="e.g. 60 (1 hour before)"
-            className="mt-1 border border-slate-200 rounded-md px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 bg-white"
-          />
-
-          {(error || success) && (
-            <p
-              className={`${
-                error ? "text-red-600" : "text-green-600"
-              } text-sm`}
+          {/* Planned date/time */}
+          <div>
+            <label
+              htmlFor="plannedAt"
+              className="text-xs font-medium uppercase tracking-wide text-slate-600"
             >
-              {error || success}
+              Planned Date & Time
+            </label>
+            <input
+              id="plannedAt"
+              type="datetime-local"
+              value={plannedAt}
+              onChange={(e) => setPlannedAt(e.target.value)}
+              className="mt-2 w-full rounded-xl border border-slate-200 bg-white/90 px-3 py-2 text-slate-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+              required
+            />
+            <p className="mt-1 text-[11px] text-slate-500">
+              We’ll email you at the selected time and also ahead of time based
+              on the lead minutes.
             </p>
-          )}
+          </div>
 
+          {/* Lead minutes */}
+          <div>
+            <div className="flex items-end justify-between">
+              <label
+                htmlFor="leadMinutes"
+                className="text-xs font-medium uppercase tracking-wide text-slate-600"
+              >
+                Lead Minutes
+              </label>
+              <span className="text-[11px] text-slate-500">
+                Example: <span className="font-medium">60</span> = 1 hour before
+              </span>
+            </div>
+            <input
+              id="leadMinutes"
+              type="number"
+              min={0}
+              max={10080}
+              value={leadMinutes}
+              onChange={(e) => setLeadMinutes(Number(e.target.value))}
+              placeholder="e.g. 60 (1 hour before)"
+              className="mt-2 w-full rounded-xl border border-slate-200 bg-white/90 px-3 py-2 text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+            />
+          </div>
+
+          {/* Submit */}
           <button
             type="submit"
-            className="mt-2 w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-md py-2 font-medium shadow-sm"
+            className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50"
           >
             Save Reminder
           </button>

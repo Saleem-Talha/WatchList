@@ -7,7 +7,11 @@ import LayoutCard from "@/app/components/Layout";
 export default function AddMediaPage() {
   return (
     <RequireAuth>
-      <LayoutCard title="Add Media" subtitle="Add a new movie, series or anime">
+      <LayoutCard
+        title="Add Media"
+        subtitle="Add a new movie, series or anime"
+        className="my-20"
+      >
         <CreateMediaItem />
       </LayoutCard>
     </RequireAuth>

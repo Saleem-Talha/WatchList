@@ -9,6 +9,7 @@ export default function MediaListPage() {
       <LayoutCard
         title="Media Library"
         subtitle="Browse and manage your entire media collection"
+        className="my-20"
       >
         <ShowMediaItem />
       </LayoutCard>

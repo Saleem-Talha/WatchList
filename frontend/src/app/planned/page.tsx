@@ -8,7 +8,7 @@ import CreateReminder from "../components/createReminder";
 export default function PlannedPage() {
   return (
     <RequireAuth>
-      <LayoutCard title="Watch Later" subtitle="Items you marked as planned">
+      <LayoutCard title="Watch Later" subtitle="Items you marked as planned" className="my-20">
         <CreateReminder />
         <ShowPlannedItem />
       </LayoutCard>
